@@ -1,3 +1,3 @@
 # myapp
 
-# node js 로 반드는 간단한 게시판 
+# node js 로 간단한 crud 구현
