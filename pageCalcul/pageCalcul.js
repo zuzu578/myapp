@@ -1,59 +1,36 @@
 
-//const user = require('../userDao/userDao'); // userSelect Dao 
-const mysqlConn = require('../properties/sqlProperties'); // mysql 설정 파일 module 화
-
-
-
-   
-
-  function totalCount(page,pageSize){
-
-        let start = 0;
-        let pageCount = [];
-        mysqlConn.conn().connect();
-        mysqlConn.conn().query('select count(*) as count from temp',(error, data, fields) => {
-            console.log('데이터 총 카운트 ! ->',data);
-        if (error) throw error; 
-        //mysqlConn.conn().end();
-        /*
-        pageCount.push(data[0].count);
-
-        if(page <= 0){
-            page = 1;
-        }else{
-            start = (page -1) * pageSize;
-        }
-        const cnt = data[0].count;
-        if(page > Math.round(cnt) / pageSize){
-            return null;
-        }
-        
-        //console.log('start / pageSize =>' , start , pageSize);
-        //tempVar.push(start);
-        //tempVar.push(pageSize);
-        //console.log('this.tempVar =>' , this.tempVar);
-
-        console.log('start!! =>' , start, pageSize);
-        obj = {
-            'start' : start,
-            'end' : pageSize,
-        } 
-        console.log('object ===>' , obj);
-        return obj;
-
-
-       
-        */
-
-        });
-        
-       
-     
-    }
-
-
-
 module.exports = {
-    totalCount : totalCount
+    paging : function (page, totalPost){
+        console.log('페이징 계산 로직 실행..');
+        const maxPost = 10; // (1)
+        const maxPage = 10; // (2)
+        let currentPage = page ? parseInt(page) : 1; // (3)
+        const hidePost = page === 1 ? 0 : (page - 1) * maxPost; // (4)
+        const totalPage = Math.ceil(totalPost / maxPost); // (5)
+        
+        if (currentPage > totalPage) { // (6)
+          currentPage = totalPage;
+        }
+      
+        const startPage = Math.floor(((currentPage - 1) / maxPage)) * maxPage + 1; // (7)
+        let endPage = startPage + maxPage - 1; // (8)
+      
+        if (endPage > totalPage) { // (9)
+          endPage = totalPage;
+        }
+        console.log(startPage, endPage, hidePost, maxPost, totalPage, currentPage);
+      
+        return { startPage, endPage, hidePost, maxPost, totalPage, currentPage } // (10)
+      }
+}
+   
+    
+
+    
+    
+
+
+
   
-  };
+
+ 
