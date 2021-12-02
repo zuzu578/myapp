@@ -15,8 +15,8 @@
     <h1> test data rendering </h1>
     <% for(let i=0 ; i < fetchDataListObj.data.length ;i++){ %>
         <h1>
-            <%= fetchDataListObj.data[i].user_seq %>
-                <%= fetchDataListObj.data[i].userName %>
+            
+              <a href=""><%= fetchDataListObj.data[i].userName %></a>
         </h1>
 
         <% } %>

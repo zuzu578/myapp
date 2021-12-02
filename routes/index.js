@@ -7,8 +7,9 @@ const mysqlConn = require('../properties/sqlProperties'); // mysql 설정 파일
 //const { default: paging } = require('../pageCalcul/pageCalcul');
 const pagingCalcul = require('../pageCalcul/pageCalcul');
 
-/* GET home page. */
-
+/**
+ * 게시물을 가져옵니다.
+ */
 router.get('/fetchList', function (req, res, next) {
   let page;
   let pageSize;
@@ -47,7 +48,16 @@ router.get('/fetchList', function (req, res, next) {
     }
 
 
-    mysqlConn.conn().query(`SELECT * FROM temp LIMIT ${start}, ${pageSize}`, (error, data, fields) => {
+    mysqlConn.conn().query(
+    ` 
+    select 
+    t1.user_seq
+    ,t1.userName
+    ,t2.seq_id
+    ,t2.tempColumn
+    from temp t1
+    inner join (select seq_id , tempColumn from temp2) t2 on t1.user_seq  = t2.seq_id LIMIT ${start}, ${pageSize}`
+    , (error, data, fields) => {
       if (error) throw error;
       console.log('fetch data by sql =>', data);
       fetchDataListObj = {
@@ -72,8 +82,8 @@ router.get('/fetchList', function (req, res, next) {
 
 });
 
-router.get('/', (req, res) => {
-  res.render('index.html')
+router.get('/linkToPost', (req, res) => {
+  res.render('posting.html')
 })
 
 
