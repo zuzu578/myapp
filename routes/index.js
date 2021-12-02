@@ -1,12 +1,9 @@
 var express = require('express');
 var router = express.Router();
-//import {paging} from '../pageCalcul/pageCalcul';
-const mysqlConn = require('../properties/sqlProperties'); // mysql 설정 파일 module 화
-//const paging = await require('ts-node').importESM('./specifier-of-esm-module', module);
-//const paging = require('../pageCalcul/pageCalcul'); // 페이징 계산 모듈
-//const { default: paging } = require('../pageCalcul/pageCalcul');
-const pagingCalcul = require('../pageCalcul/pageCalcul');
 
+const mysqlConn = require('../properties/sqlProperties'); // mysql 설정 파일 module 화
+
+const pagingCalcul = require('../pageCalcul/pageCalcul');
 /**
  * 게시물을 가져옵니다.
  */
@@ -33,6 +30,13 @@ router.get('/fetchList', function (req, res, next) {
   mysqlConn.conn().connect();
   mysqlConn.conn().query('select count(*) as count from temp', (error, data, fields) => {
     // pageNation Bar rendering 시 필요한 변수 값 받아오기 
+    let totalCount = 0;
+    //console.log('paging fetchList => ', data)
+    for(let i = 0 ; i < data.length ; i++){
+      //console.log('paging fetchList => ', data[i].count);
+      totalCount = data[i].count;
+    }
+    //console.log('totalCount = > ' , totalCount);
     let { startPage, endPage, hidePost, maxPost, totalPage, currentPage } = pagingCalcul.paging(page, data[0].count);
     let fetchDataListObj = {};
     let start = 0;
@@ -42,11 +46,13 @@ router.get('/fetchList', function (req, res, next) {
     } else {
       start = (page - 1) * pageSize;
     }
+    //console.log('start,pageSize' ,start,pageSize);
+    /*
     if (page > Math.round(data[0].count) / pageSize) {
       console.log('마지막 페이지입니다.');
       return null;
     }
-
+    */
 
     mysqlConn.conn().query(
     ` 
@@ -59,7 +65,7 @@ router.get('/fetchList', function (req, res, next) {
     inner join (select seq_id , tempColumn from temp2) t2 on t1.user_seq  = t2.seq_id LIMIT ${start}, ${pageSize}`
     , (error, data, fields) => {
       if (error) throw error;
-      console.log('fetch data by sql =>', data);
+      //console.log('fetch data by sql =>', data);
       fetchDataListObj = {
         'data': data,
         'startPage': startPage,
@@ -81,17 +87,5 @@ router.get('/fetchList', function (req, res, next) {
 
 
 });
-
-router.get('/linkToPost', (req, res) => {
-  res.render('posting.html')
-})
-
-
-
-
-
-
-
-
 
 module.exports = router;

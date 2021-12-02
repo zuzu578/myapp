@@ -9,17 +9,41 @@
 <body>
     <h1>fewfw</h1>
 
-    <form>
-        <input type="text" name="" value="">
-        <input type="text" name="" value="">
-        
+   
 
-    </form>
+    <form name="myForm" action="doPosting" onsubmit="return validateForm()" method="post">
+       
+        userName :  <input type="text" name="userName">
+        tempColumn : <input type="text" name="tempColumn">
+        <button type="submit">입력</button>
+        </form>
+    
+    
     
 </body>
+<script>
 
-<scrpit>
+function validateForm() {
+  let userName = document.forms["myForm"]["userName"].value;
+  let tempColumn = document.forms["myForm"]["tempColumn"].value;
+  if (userName == "") {
+    alert("Name must be filled out");
+    return false;
+  }
+  if (tempColumn == "") {
+    alert("tempColumn must be filled out");
+    return false;
+  }
+  
+   form.submit();
+}
+    
+    
+       
 
 
-</scrpit>
+
+</script>
+
+
 </html>

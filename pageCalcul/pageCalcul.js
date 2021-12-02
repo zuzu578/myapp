@@ -1,7 +1,7 @@
 
 module.exports = {
     paging : function (page, totalPost){
-        console.log('페이징 계산 로직 실행..');
+       // console.log('페이징 계산 로직 실행..');
         const maxPost = 10; // (1)
         const maxPage = 10; // (2)
         let currentPage = page ? parseInt(page) : 1; // (3)
@@ -18,7 +18,7 @@ module.exports = {
         if (endPage > totalPage) { // (9)
           endPage = totalPage;
         }
-        console.log(startPage, endPage, hidePost, maxPost, totalPage, currentPage);
+       //console.log(startPage, endPage, hidePost, maxPost, totalPage, currentPage);
       
         return { startPage, endPage, hidePost, maxPost, totalPage, currentPage } // (10)
       }
