@@ -9,13 +9,58 @@
 <body>
     <h1> update </h1>
 
-    <%=stuff_i_want.tempColumn %>
-    <form>
-        <input type="text" name="">
-        <input type="text" name="">
-        <button type="submit"> 수정</button>
-
-    </form>
+ 
+        <input type="hidden" name="board_seq" id="board_seq" value=" <%=stuff_i_want.user_seq %>">
+        userName :  <input type="text" name="userName" id="userName" value="<%=stuff_i_want.userName%>">
+        tempColumn : <input type="text" name="tempColumn" id="tempColumn" value="<%=stuff_i_want.tempColumn %>">
+        <button type="button" onclick="doUpdatePost()">입력</button>
+    
+    
     
 </body>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+  const doUpdatePost = async()=>{
+    let board_seq = document.getElementById('board_seq').value;
+    let userName = document.getElementById('userName').value;
+    let tempColumn = document.getElementById('tempColumn').value;
+
+    console.log('sfas=>',board_seq,userName,tempColumn);
+
+    if(!userName){
+      alert('입력칸 누락');
+      return false;
+    }
+    if(!tempColumn){
+      alert('입력칸 누락');
+      return false;
+    }
+
+    const updateData = await axios.post('/postRouter/doUpdate',{
+        board_seq:board_seq,
+        userName:userName,
+        tempColumn:tempColumn,
+      
+    });
+
+    console.log('updateData --->' ,updateData.data);
+
+    if(updateData.data === 'success'){
+      alert('업데이트 성공!');
+      window.location.href = '/fetchList'
+
+
+    }else{
+      alert('서버와의 통신에 문제가 생겼습니다.');
+      return false;
+      
+    }
+
+    
+
+  }
+
+
+</script>
 </html>

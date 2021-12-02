@@ -70,7 +70,7 @@ module.exports = {
                 left join (select seq_id , tempColumn from temp2) t2 on t1.user_seq  = t2.seq_id
                 where t1.user_seq  = ${getIdx}`, (error, data, fields) => {
                 if (error) throw error;
-                
+
                 return callback(data);   
             })
 
@@ -78,4 +78,39 @@ module.exports = {
             console.log('error =>' , error);
         }
     },
+    doUpdate : function(hashParams , callback){
+        console.log('글 수정하기 로직 실행 ...');
+       // 문자열 (varchar)일 경우 '' 사용 
+        
+        let status = '';
+        try{
+            mysqlConn.conn().connect();
+            // temp table update 
+            mysqlConn.conn().query(`
+            UPDATE temp
+            SET userName = '${hashParams.userName}'
+            WHERE user_seq = ${hashParams.board_seq}`
+            ,(error, data, fields) => {
+                if (error) throw error;
+  
+            })
+            // temp2 table update 
+            mysqlConn.conn().query(`
+            UPDATE temp2
+            SET tempColumn = '${hashParams.tempColumn}'
+            WHERE seq_id = ${hashParams.board_seq} 
+            `, (error, data, fields) => {
+                if (error) throw error;
+  
+            })
+
+            status = 'success';
+
+        }catch(error){
+            console.log('error =>' , error);
+            status = 'fail';
+        }
+
+        return {status}
+    }
 }

@@ -38,15 +38,9 @@ router.get('/linkToUpdate',(req,res)=>{
     var stuff_i_want = {};
 
     posting.viewData(getIdx, function(result){
-    
     for(let i = 0 ; i < result.length ; i++){
-        console.log('stuff_i_want ===>' ,result[i]);
         stuff_i_want = result[i];
     }
-
-    console.log('stuff_i_want ===> ' , stuff_i_want);
-
-    
     res.render('update.html',{stuff_i_want});
     });
 })
@@ -54,9 +48,35 @@ router.get('/linkToUpdate',(req,res)=>{
  * update api 
  */
 router.post('/doUpdate',(req,res)=>{
-  // 업데이트할 데이터의 key값을 받아온다.
+  let hashParams = {};
+  // 업데이트할 데이터의 인덱스 값을 받아온다. 
+  let board_seq = req.body.board_seq;
+  // 업데이트할 내용을 받아온다.
+  let userName = req.body.userName;
+  let tempColumn = req.body.tempColumn;
+  // params 
+  hashParams = {
+      'board_seq' : board_seq,
+      'userName' : userName,
+      'tempColumn' : tempColumn,
+  }
+  // 업데이트처리하기.
+ let {status} =  posting.doUpdate(hashParams)
 
-  // 업데이처리하기.
+ if(status === 'success'){
+
+    res.json(status);
+ }else{
+     console.log('transcation fail..');
+     res.json(status);
+  
+
+ }
+    
+  
+
+
+
 })
 /**
  * delete api 
