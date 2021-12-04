@@ -32,3 +32,16 @@ startPage , endPage , hidePost , maxPost , totalPage , currentPage 를 클라이
 클라이언트는 해당 object를 받아 렌더링처리를한다.
 # 페이징 결과 
 <img width="891" alt="스크린샷 2021-12-01 오후 5 27 50" src="https://user-images.githubusercontent.com/69393030/144198781-f89d8f82-029c-4689-b4de-25fef903a8be.png">
+
+
+# node js file download / file upload 
+- file download module 화 , callback function 활용 
+- 하나의 function 에서 하나의 기능을 하도록 구현 
+기존 소스 => 하나의 함수에서 파일 존재 여부 체크 , 파일 다운로드를 동시에 진행 
+개선 소스 => 파일 다운로드 함수에서는 다운로드만 실시 , 파일 존재 여부 체크 함수를 모듈화 하여 callback() 하도록 구현 
+
+<img width="631" alt="스크린샷 2021-12-04 오후 1 10 43" src="https://user-images.githubusercontent.com/69393030/144696430-edb106ca-fa77-4301-be44-e11c8a34e4fd.png">
+- 파일 다운로드 기능만 이행하는 함수
+
+<img width="631" alt="스크린샷 2021-12-04 오후 1 11 07" src="https://user-images.githubusercontent.com/69393030/144696437-902b67f8-9561-49b4-9b6c-1f4700c82a38.png">
+- 파일 존재 여부 체크 기능만 하는 함수 모듈 
