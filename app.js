@@ -7,6 +7,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postRouter = require('./postService/postService');
+let uploadRouter = require('./fileUploadService/fileUpload')
 
 var app = express();
 
@@ -39,6 +40,12 @@ app.use('/', indexRouter);
  * http://localhost:3000/postRouter/linkToPost 
  */
 app.use('/postRouter', postRouter);
+
+/**
+ * 파일 첨부 api 
+ * 
+ */
+app.use('/uploadFiles' ,uploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
