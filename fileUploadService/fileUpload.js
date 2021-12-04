@@ -32,11 +32,7 @@ router.get('/linkToFileUpload', function(req, res, next) {
  */
 
  router.post('/uploadFile', uploadWithOriginalFilename.single('userFile'), function(req,res){ 
-   // 해당 경로(dir)에 파일 경로가 존재하지않으면 생성해줍니다. 
-  /*
-  let dir = './uploadedFiles';
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir);
-  */
+  
     res.send('파일이 저장되었습니다.');
 });
 
