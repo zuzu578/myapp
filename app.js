@@ -8,6 +8,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var postRouter = require('./postService/postService');
 let uploadRouter = require('./fileUploadService/fileUpload')
+let loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+
 app.use('/users', usersRouter);
 // router 
 /**
@@ -40,6 +42,12 @@ app.use('/', indexRouter);
  * http://localhost:3000/postRouter/linkToPost 
  */
 app.use('/postRouter', postRouter);
+
+/**
+ * http://localhost:3000/login/ 
+ * 로그인 / 로그아웃 api router
+ */
+app.use('/',loginRouter);
 
 /**
  * 파일 첨부 api 
