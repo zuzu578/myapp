@@ -45,3 +45,41 @@ startPage , endPage , hidePost , maxPost , totalPage , currentPage 를 클라이
 
 <img width="631" alt="스크린샷 2021-12-04 오후 1 11 07" src="https://user-images.githubusercontent.com/69393030/144696437-902b67f8-9561-49b4-9b6c-1f4700c82a38.png">
 - 파일 존재 여부 체크 기능만 하는 함수 모듈 
+
+
+
+# promise / callback function
+
+/**
+ * callback function 
+
+const fetchData = (callback) =>{
+  
+  return callback('zuzu!');
+}
+
+fetchData(function(result){
+  console.log('hello'  + result)
+});
+ */
+
+/**
+ * promise 
+ * 상태 3가지
+ * 1) Pending
+ * 2) Fulfilled
+ * 3) Rejected
+ */
+
+const fetchData2 = (promise) =>{
+  // Pending status 
+  return new Promise((resolve, reject)=>{
+  // Fulfilled status 
+    resolve('hello world');
+  })
+
+}
+// then function => result 를 처리 가능 
+fetchData2().then(function(result){
+  console.log(result);
+})
