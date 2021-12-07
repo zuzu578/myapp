@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://js.tosspayments.com/v1"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> toss 결제 샘플 </h1>
+    <input type="hidden" name="customerName" id="customerName" value="이주환"> 
+    결제상품<input type="text" readonly name="product" id="product" value="토스 티셔츠 외 2건">
+    결제금액<input type="text" readonly name="amount" id="amount" value="100"><br/>
+    <select name="payMethod" id="payMethod" value="">
+        <option value="카드">카드</option>
+        <option value="토스결제">토스결제</option>
+        <option value="가상계좌">가상계좌</option>
+        <option value="계좌이체">계좌이체</option>
+        <option value="휴대폰">휴대폰</option>
+        <option value="문화상품권">문화상품권</option>
+        <option value="도서문화상품권">도서문화상품권</option>
+        <option value="게임문화상품권">게임문화상품권</option>
+
+    </select>
+
+    <button id="payment-button">결제</button>
+    
+</body>
+<script>
+      var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
+      var tossPayments = TossPayments(clientKey)
+      //console.log('tossPayments =>', tossPayments);
+      var button = document.getElementById('payment-button') // 결제하기 버튼
+      let customerName = document.getElementById('customerName').value;
+      let product = document.getElementById('product').value;
+      let amount = document.getElementById('amount').value;
+      let payMethod = document.getElementById('payMethod').value;
+      
+
+      button.addEventListener('click', function () {
+        console.log('payMethod=>',payMethod);
+        tossPayments.requestPayment('토스결제', {
+          amount: amount,
+          orderId: '-pe4RVc1oZ7BdlGH4suZf',
+          orderName: product,
+          customerName: customerName,
+          successUrl: 'http://localhost:3000/payMentSuccess',
+          failUrl: 'http://localhost:3000/payMentFail',
+        })
+      })
+</script>
+</html>

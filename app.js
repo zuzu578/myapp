@@ -9,6 +9,7 @@ var usersRouter = require('./routes/users');
 var postRouter = require('./postService/postService');
 let uploadRouter = require('./fileUploadService/fileUpload')
 let loginRouter = require('./routes/login');
+let payMent = require('./routes/payment');
 
 var app = express();
 
@@ -55,6 +56,7 @@ app.use('/',loginRouter);
  */
 app.use('/uploadFiles' ,uploadRouter);
 
+app.use('/',payMent);
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
