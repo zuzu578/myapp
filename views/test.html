@@ -68,7 +68,6 @@
               <button type="button"class="btn btn-primary"><a href="postRouter/linkToPost"> 글 작성 </a></button>
 </body>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
 <script>
   const doDelete = async(board_seq)=>{
 
@@ -84,7 +83,7 @@
       //console.log('result ==>', result);
       if(result.data === "success"){
         alert('데이터를 정상적으로 삭제하였습니다.');
-        location.reload();
+        window.location.href = '/fetchList';
       }else{
         alert('데이터 삭제에 이상이 생겼습니다.');
         return false;
