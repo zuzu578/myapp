@@ -47,39 +47,51 @@ startPage , endPage , hidePost , maxPost , totalPage , currentPage 를 클라이
 - 파일 존재 여부 체크 기능만 하는 함수 모듈 
 
 
+# callback , promise(async , await) , prmoise channing
 
-# promise / callback function
-
-/**
- * callback function 
-
-const fetchData = (callback) =>{
-  
-  return callback('zuzu!');
-}
-
-fetchData(function(result){
-  console.log('hello'  + result)
-});
- */
+``` javascript
 
 /**
- * promise 
- * 상태 3가지
- * 1) Pending
- * 2) Fulfilled
- * 3) Rejected
+ * async await promise 
  */
-
-const fetchData2 = (promise) =>{
-  // Pending status 
+const fetchData = () =>{
   return new Promise((resolve, reject)=>{
-  // Fulfilled status 
-    resolve('hello world');
+    resolve(20);
   })
-
 }
-// then function => result 를 처리 가능 
-fetchData2().then(function(result){
+const renderData = async() =>{
+  let render = await fetchData();
+  console.log(render);
+}
+
+renderData();
+
+/**
+ * promise chainning 
+ */
+const fetchData2 = (promise)=>{
+  return new Promise((resolve , reject)=>{
+    resolve(20);
+  })
+}
+
+fetchData2()
+.then((res)=>{
+  console.log(res);
+  return res + 1;
+})
+.then((res) =>{
+  console.log(res);
+  return res + 1; 
+})
+/**
+ * callback function
+ */
+const callbackReturn = (callback) =>{
+
+    return callback(20);
+}
+
+callbackReturn(function(result){
   console.log(result);
 })
