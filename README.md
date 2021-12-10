@@ -95,3 +95,42 @@ const callbackReturn = (callback) =>{
 callbackReturn(function(result){
   console.log(result);
 })
+
+```
+# sql 에서 fk 로 제약조건 걸고 설계 / fk 안걸고 그냥 pk 로 조인해서 설계 
+``` sql
+
+-- 포린키 제약조건 걸때 
+create table test_user(
+	user_seq int auto_increment not null primary key,
+	user_name varchar(200),
+	user_address varchar(200)
+)
+create table test_user_content(
+    user_seq int , board_seq int,primary key(user_seq,board_seq), 
+	constraint user_content_fk
+        foreign key (user_seq) references test_user (user_seq),
+        board_content varchar(2000)
+)
+
+-- 포린키 제약조건 안걸고 , 일반적으로 pk 를 이용하려고 할때 설계 
+
+create table test_1(
+	user_seq int auto_increment not null primary key,
+	user_name varchar(200),
+	user_address varchar(200)
+
+)
+
+create table test_2(
+	user_seq int , board_seq int,primary key(user_seq,board_seq), 
+	 board_content varchar(2000)
+	
+)
+
+```
+위 코드 와 아래코드 특징은 , 특정한 pk 컬럼이 다른 테이블에서 참조하여 사용하고있는 외래키(foreign key ) 라는 점이지만 ,
+constraint 제약을 걸어서 명시적으로 fk 를 선언한것과 안한것의 차이는 크다.
+constraint 제약을 걸어서 fk 를 선언하게되면 ,삭제 , 수정 에 영향을끼친다. 반면 그렇지 않은경우는 영향을 끼치지 않는다.
+constraint 제약을 걸어서 fk 를 선언하면 더 안전하게 , 데이터의 무결성 을 보장하게 된다.
+
