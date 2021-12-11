@@ -47,39 +47,96 @@ startPage , endPage , hidePost , maxPost , totalPage , currentPage 를 클라이
 - 파일 존재 여부 체크 기능만 하는 함수 모듈 
 
 
+# callback , promise(async , await) , prmoise channing
 
-# promise / callback function
-
-/**
- * callback function 
-
-const fetchData = (callback) =>{
-  
-  return callback('zuzu!');
-}
-
-fetchData(function(result){
-  console.log('hello'  + result)
-});
- */
+``` javascript
 
 /**
- * promise 
- * 상태 3가지
- * 1) Pending
- * 2) Fulfilled
- * 3) Rejected
+ * async await promise 
  */
-
-const fetchData2 = (promise) =>{
-  // Pending status 
+const fetchData = () =>{
   return new Promise((resolve, reject)=>{
-  // Fulfilled status 
-    resolve('hello world');
+    resolve(20);
   })
-
 }
-// then function => result 를 처리 가능 
-fetchData2().then(function(result){
+const renderData = async() =>{
+  let render = await fetchData();
+  console.log(render);
+}
+
+renderData();
+
+/**
+ * promise chainning 
+ */
+const fetchData2 = (promise)=>{
+  return new Promise((resolve , reject)=>{
+    resolve(20);
+  })
+}
+
+fetchData2()
+.then((res)=>{
+  console.log(res);
+  return res + 1;
+})
+.then((res) =>{
+  console.log(res);
+  return res + 1; 
+})
+/**
+ * callback function
+ */
+const callbackReturn = (callback) =>{
+
+    return callback(20);
+}
+
+callbackReturn(function(result){
   console.log(result);
 })
+
+```
+# sql 에서 fk 로 제약조건 걸고 설계 / fk 안걸고 그냥 pk 로 조인해서 설계 
+``` sql
+
+-- 포린키 제약조건 걸때 
+create table test_user(
+	user_seq int auto_increment not null primary key,
+	user_name varchar(200),
+	user_address varchar(200)
+)
+
+
+CREATE TABLE  test_user_content(
+   user_seq int NOT NULL,
+  board_seq int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (user_seq,board_seq),
+  constraint user_content_fk
+        foreign key (user_seq) references test_user (user_seq),
+        board_content varchar(2000)
+        
+) ENGINE=MyISAM;
+
+
+-- 포린키 제약조건 안걸고 , 일반적으로 pk 를 이용하려고 할때 설계 
+
+create table test_1(
+	user_seq int auto_increment not null primary key,
+	user_name varchar(200),
+	user_address varchar(200)
+
+)
+
+create table test_2(
+	user_seq int , board_seq int,primary key(user_seq,board_seq), 
+	 board_content varchar(2000)
+	
+)
+
+```
+위 코드 와 아래코드 특징은 , 특정한 pk 컬럼이 다른 테이블에서 참조하여 사용하고있는 외래키(foreign key ) 라는 점이지만 ,
+constraint 제약을 걸어서 명시적으로 fk 를 선언한것과 안한것의 차이는 크다.
+constraint 제약을 걸어서 fk 를 선언하게되면 ,삭제 , 수정 에 영향을끼친다. 반면 그렇지 않은경우는 영향을 끼치지 않는다.
+constraint 제약을 걸어서 fk 를 선언하면 더 안전하게 , 데이터의 무결성 을 보장하게 된다.
+
