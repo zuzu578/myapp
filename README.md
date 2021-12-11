@@ -106,12 +106,18 @@ create table test_user(
 	user_name varchar(200),
 	user_address varchar(200)
 )
-create table test_user_content(
-    user_seq int , board_seq int,primary key(user_seq,board_seq), 
-	constraint user_content_fk
+
+
+CREATE TABLE  test_user_content(
+   user_seq int NOT NULL,
+  board_seq int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (user_seq,board_seq),
+  constraint user_content_fk
         foreign key (user_seq) references test_user (user_seq),
         board_content varchar(2000)
-)
+        
+) ENGINE=MyISAM;
+
 
 -- 포린키 제약조건 안걸고 , 일반적으로 pk 를 이용하려고 할때 설계 
 
