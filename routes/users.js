@@ -1,10 +1,12 @@
-var express = require('express');
-var router = express.Router();
+let express = require('express');
+let router = express.Router();
+let userImple = require('../TestuserImple/userImple');
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  
-  res.render('test.html');
-});
+router.get('/',(req,res)=>{
+  const fetchData = userImple.doSelect((result)=>{
+    console.log(result);
+  })
+
+})
 
 module.exports = router;

@@ -32,7 +32,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 
-app.use('/users', usersRouter);
+app.use('/testUserRouter', usersRouter);
 // router 
 /**
  * 글 list fetch 
