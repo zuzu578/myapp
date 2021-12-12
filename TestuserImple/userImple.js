@@ -2,12 +2,12 @@ const mysqlConn = require('../properties/sqlProperties'); // mysql 설정 파일
 
 /**
  * @test
- * 연습용으로 ,promise 를 이용하여 , 임시 데이터 select 후 return 해보기 
+ * 
  */
 
 module.exports = {
     doSelect: (callback) => {
-
+        try{
             mysqlConn.conn().connect();
             mysqlConn.conn().query(`
             select
@@ -21,6 +21,11 @@ module.exports = {
                     return callback(data);
                  
                 })
+        }
+        catch(error){
+            console.log(error);
+        }
+
 
        
 

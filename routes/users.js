@@ -4,8 +4,9 @@ let userImple = require('../TestuserImple/userImple');
 
 router.get('/',(req,res)=>{
   const fetchData = userImple.doSelect((result)=>{
-    console.log(result);
+    console.log('fetchData  -->' , result);
   })
+ 
 
 })
 
